@@ -10,6 +10,8 @@ function App() {
   let [tokenAddress, setTokenAddress] = useState();
   let [connectedAddress, setConnectedAddress] = useState();
   let [transferAmount, setTransferAmount] = useState();
+  let [owner, setOwner] = useState();
+  let [totalSupply, setTotalSupply] = useState();
 
   let { ethereum } = window;
   let tokenContract = null;
@@ -21,6 +23,8 @@ function App() {
     "function decimals() view returns (uint8)",
     "function symbol() view returns (string)",
     "function name() public view returns (string)",
+    "function owner() view returns (address)",
+    "function totalSupply() view returns (uint256)",
   ];
 
   const transferAddress = "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199";
@@ -87,6 +91,21 @@ function App() {
         <button
           onClick={async () => {
             if (tokenContract && connected) {
+              const _owner = await tokenContract.owner();
+              setOwner(_owner);
+            }
+          }}
+        >
+          Get Owner
+        </button>
+
+        <span>Owner: {owner}</span>
+      </div>
+
+      <div>
+        <button
+          onClick={async () => {
+            if (tokenContract && connected) {
               const _decimals = await tokenContract.decimals();
               setDecimals(_decimals);
             }
@@ -96,6 +115,21 @@ function App() {
         </button>
 
         <span>Decimals: {decimals}</span>
+      </div>
+
+      <div>
+        <button
+          onClick={async () => {
+            if (tokenContract && connected) {
+              const _totalSupply = await tokenContract.totalSupply();
+              setTotalSupply(ethers.utils.formatUnits(_totalSupply),0);
+            }
+          }}
+        >
+          Get Total Supply
+        </button>
+
+        <span>Total Supply: {totalSupply}</span>
       </div>
 
       <div>
@@ -112,6 +146,8 @@ function App() {
 
         <span>Balance: {balance}</span>
       </div>
+
+
 
       <div>
         <input
