@@ -529,65 +529,9 @@ function App() {
       </div>
 
 
+     
 
 
-
-      <div>
-        <button
-          onClick={async () => {
-            if (tokenContract && connected) {
-              const _totalSupply = await tokenContract.totalSupply();
-              setTotalSupply(ethers.utils.formatUnits(_totalSupply),0);
-            }
-          }}
-        >
-          Get Total Supply
-        </button>
-
-        <span>Total Supply: {totalSupply}</span>
-      </div>
-
-
-
-      <div>
-        <button
-          onClick={async () => {
-            if (tokenContract && connected) {
-              const _balance = await tokenContract.balanceOf(connectedAddress);
-              setBalance(ethers.utils.formatEther(_balance) * 10 ** 18);
-            }
-          }}
-        >
-          Get Balance
-        </button>
-
-        <span>Balance: {balance}</span>
-      </div>
-
-
-
-      <div>
-        <input
-          type="text"
-          placeholder="Transfer Amount"
-          onChange={(e) => setTransferAmount(e.currentTarget.value)}
-          value={transferAmount}
-        />
-        <button
-          onClick={async () => {
-            if (tokenContract && connected && transferAmount) {
-              console.log(transferAmount)
-              await tokenContract.transfer(transferAddress, transferAmount);
-              const _balance = await tokenContract.balanceOf(connectedAddress);
-              setBalance(ethers.utils.formatEther(_balance) * 10 ** 18);
-            }
-          }}
-        >
-          Transfer
-        </button>
-
-        <span>Balance After Transfer: {balance}</span>
-      </div>
     </div>
   );
 }
